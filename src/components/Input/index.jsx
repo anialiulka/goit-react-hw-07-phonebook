@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import css from './Input.module.css';
-import { addContactInfo } from 'redux/contacts/slice';
+import { addContact } from 'redux/contacts/operations';
 import { selectContacts } from 'redux/contacts/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -9,14 +9,14 @@ export const Input = () => {
   const [form, setForm] = useState({ name: '', number: '' });
   const dispatch = useDispatch();
 
-  const addContact = data => {
+  const addContactHandler = data => {
     const nameRepeated = contacts.find(
       contact => contact.name.toLowerCase() === data.name.toLowerCase()
     );
     if (nameRepeated) {
       return alert(`${nameRepeated.name} is already in your contacts`);
     }
-    dispatch(addContactInfo(data));
+    dispatch(addContact(data));
   };
 
   const handleChange = ({ target }) => {
@@ -26,7 +26,7 @@ export const Input = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    addContact(form);
+    addContactHandler(form);
     setForm({ name: '', number: '' });
   };
 
